@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>What's New - Via Marine</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/viamarine.jpg">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/viamarine.jpg">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Arial:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/common.css">
+    <link rel="stylesheet" href="../assets/css/header.css">
+    <link rel="stylesheet" href="../assets/css/whats_new.css">
+    </head>
+
+<body>
+    <header>
+        <h1 class="title-1">
+            <span class="via">Via</span>
+            <span class="marine">Marine</span>
+        </h1>
+        <nav>
+            <ul class="menu">
+                <li class="nav-list">
+                    <a class="nav-link" href="../index.html">Home</a>
+                </li>
+                <li class="nav-list">
+                    <a class="nav-link" href="./about.html">About</a>
+                </li>
+                <li class="nav-list">
+                    <a class="nav-link" href="./projects.html">Ships</a>
+                </li>
+                <li class="nav-list">
+                    <a class="nav-link" href="./contacts.html">Contacts</a>
+                </li>
+                <li class="nav-list">
+                    <a class="nav-link" href="./names.html">Names</a>
+                </li>
+                <li class="nav-list">
+                    <a class="nav-link" href="./login.html">Log In</a>
+                </li>
+                <li class="nav-list">
+                    <a class="nav-link active" href="./whats_new.html">What's New</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <div class="container">
+                <h1>What's New at Via Marine</h1>
+                <p>Stay updated with the latest news, announcements, and developments from our company.</p>
+            </div>
+        </div>
+
+        <section class="news-container">
+            <br>
+            <div class="filter-controls">
+                <button class="filter-btn active" data-filter="all">All Updates</button>
+                <button class="filter-btn" data-filter="news">Company News</button>
+                <button class="filter-btn" data-filter="update">Updates</button>
+            </div>
+            <div class="news-grid" id="newsGrid">
+            </div>
+        </section>
+
+        <div id="postModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeModal()">&times;</span>
+                <div id="modalContent">
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        if (!localStorage.getItem('posts')) {
+            const samplePosts = [
+                {
+                    title: "New Vessel Added to Our Company",
+                    content: "We are pleased to announce the addition of a new vessel to our company. The MV Oceanic Explorer is a state-of-the-art oil tanker with advanced safety features and environmentally friendly technology. This addition strengthens our capacity to serve our clients with greater efficiency and reliability.<br><br>The vessel has successfully completed all necessary inspections and certifications, and is now ready for operations. Our crew has undergone extensive training to ensure smooth operations and adherence to the highest safety standards.<br><br>We look forward to the contributions this vessel will make to our service offerings.",
+                    author: "Company Management",
+                    date: "2025-11-15",
+                    type: "News",
+                    visibility: "Public",
+                    image: "https://images.unsplash.com/photo-1520095972714-909e91b038e5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                },
+
+                {
+                    title: "Safety Protocol Updates",
+                    content: "Via Marine is committed to maintaining the highest standards of safety in all our operations. We have recently updated our safety protocols to incorporate the latest industry best practices and regulatory requirements.<br><br>Key updates include:<br>• Enhanced emergency response procedures<br>• Updated crew training modules<br>• Improved vessel maintenance schedules<br>• Advanced monitoring systems for environmental compliance<br><br>All crew members will undergo refresher training on these updated protocols. We believe these enhancements will further strengthen our safety record and ensure the well-being of our crew, vessels, and the environment.",
+                    author: "Safety Department",
+                    date: "2025-10-28",
+                    type: "Update",
+                    visibility: "Public",
+                    image: "https://images.unsplash.com/photo-1504639725590-34d0984388bd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80"
+                },
+
+                {
+                    title: "Via Marine Receives Industry Recognition",
+                    content: "We are proud to announce that Via Marine has been recognized with the Maritime Excellence Award for our commitment to safety, environmental responsibility, and operational efficiency.<br><br>This prestigious award acknowledges our continuous efforts to implement best practices in the maritime industry and our dedication to exceeding regulatory requirements. The selection committee particularly noted our innovative approach to reducing environmental impact and our comprehensive crew welfare programs.<br><br>We extend our gratitude to all our employees whose hard work and dedication have made this achievement possible. This recognition motivates us to continue striving for excellence in all aspects of our operations.",
+                    author: "Corporate Communications",
+                    date: "2025-09-10",
+                    type: "News",
+                    visibility: "Public",
+                    image: "https://images.unsplash.com/photo-1551269901-5c5e14c25df7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80"
+                }
+            ];
+            localStorage.setItem('posts', JSON.stringify(samplePosts));
+        }
+
+        function displayPublicPosts(filter = 'all') {
+            const posts = JSON.parse(localStorage.getItem('posts')) || [];
+            const newsGrid = document.getElementById('newsGrid');          
+            let filteredPosts = posts.filter(post => post.visibility === 'public' || post.visibility === undefined);
+            if (filter !== 'all') {
+                filteredPosts = filteredPosts.filter(post => post.type === filter);
+            }
+
+            newsGrid.innerHTML = '';
+            if (filteredPosts.length === 0) {
+                newsGrid.innerHTML = `
+                    <div class="no-posts">
+                        <i class="far fa-newspaper"></i>
+                        <h3>No updates available</h3>
+                        <p>There are no ${filter !== 'all' ? filter + ' ' : ''} posts to display at the moment. Please check back later for updates.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filteredPosts.sort((a, b) => {
+                return new Date(b.date) - new Date(a.date);
+            });
+
+            filteredPosts.forEach((post, index) => {
+                const postElement = document.createElement('div');
+                postElement.classList.add('news-item');
+                postElement.setAttribute('data-post-index', index);
+                postElement.setAttribute('data-post-id', posts.indexOf(post));
+                const excerpt = post.content.length > 150 
+                    ? post.content.substring(0, 150).replace(/<br>/g, ' ') + '...' 
+                    : post.content.replace(/<br>/g, ' ');
+                let postContent = `
+                    <div class="news-image-container">
+                `;
+                if (post.image) {
+                    postContent += `<img src="${post.image}" alt="${post.title}" class="news-image">`;
+                } 
+                else {
+                    postContent += `
+                        <div class="news-placeholder">
+                            <i class="fas fa-newspaper"></i>
+                        </div>
+                    `;
+                }
+
+                postContent += `
+                    </div>
+                    <div class="news-content">
+                        <span class="news-type ${post.type}">${post.type === 'news' ? 'Company News' : 'Company Update'}</span>
+                        <h3 class="news-title">${post.title}</h3>
+                        <p class="news-excerpt">${excerpt}</p>
+                        <div class="news-meta">
+                            <span><i class="fas fa-user"></i> ${post.author}</span>
+                            <span><i class="far fa-calendar-alt"></i> ${formatDate(post.date)}</span>
+                        </div>
+                    </div>
+                `;
+
+                postElement.innerHTML = postContent;
+                postElement.addEventListener('click', function() {
+                    openPostModal(posts.indexOf(post));
+                });
+
+                newsGrid.appendChild(postElement);
+            });
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            if (isNaN(date.getTime())) {
+                return dateString; 
+            }
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return date.toLocaleDateString('en-US', options);
+        }
+
+        function openPostModal(postIndex) {
+            const posts = JSON.parse(localStorage.getItem('posts')) || [];
+            const post = posts[postIndex];
+            if (!post) return;
+            const modalContent = document.getElementById('modalContent');
+            let content = '';
+            if (post.image) {
+                content += `
+                    <div class="modal-image-container">
+                        <img src="${post.image}" alt="${post.title}" class="modal-image">
+                        <div class="modal-image-overlay"></div>
+                    </div>
+                `;
+            }
+
+            content += `
+                <div class="modal-body">
+                    <span class="news-type ${post.type}">${post.type === 'news' ? 'Company News' : 'Company Update'}</span>
+                    <h2 class="modal-title">${post.title}</h2>
+                    <div class="modal-content-text">${post.content}</div>
+                    <div class="modal-meta">
+                        <span><i class="fas fa-user"></i> Posted by ${post.author}</span>
+                        <span><i class="far fa-calendar-alt"></i> ${formatDate(post.date)}</span>
+                    </div>
+                </div>
+            `;
+            modalContent.innerHTML = content;
+            document.getElementById('postModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() 
+        {
+            document.getElementById('postModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onclick = function(event) 
+        {
+            const modal = document.getElementById('postModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        filterButtons.forEach(button => 
+        {
+            button.addEventListener('click', function() {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                const filter = this.getAttribute('data-filter');
+                displayPublicPosts(filter);
+            });
+        });
+
+        document.addEventListener('keydown', function(event) 
+        {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        window.addEventListener('DOMContentLoaded', function() 
+        {
+            displayPublicPosts('all');
+        });
+        </script>
+    </body>
+</html>

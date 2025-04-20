@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Contacts</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/viamarine.jpg">
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon/viamarine.jpg">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Aldrich&family=Francois+One&family=Inconsolata:wght@300;400;600;900&family=Karla:wght@300;400;500;600;800&family=Lato:wght@300;400;900&family=Lora:wght@400;500;600;700&family=Merriweather:wght@300;400;700;900&family=Montserrat:wght@200;300;400;500;600;700;900&family=Nunito:wght@200;300;400;600;700;900&family=Open+Sans:wght@400;600;700;800&family=Oswald:wght@300;400;500;600;700&family=Poppins:wght@100;200;300;400;500;600;700;900&family=Proza+Libre:wght@400;500;600;700;800&family=Raleway:wght@200;300;400;600;900&family=Roboto+Slab:wght@200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Work+Sans:wght@200;400;500;600;700;900&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="../assets/css/common.css" />
+    <link rel="stylesheet" href="../assets/css/header.css" />
+    <link rel="stylesheet" href="../assets/css/whats_new.css" />
+</head>
+<header>
+    <h1 class="title-1">
+      <span class="via">Via</span>
+      <span class="marine">Marine</span>
+    </h1>
+
+  <nav>
+    <ul class="menu">
+      <li class="nav-list">
+        <a class="nav-link" href="../index.html">Home</a>
+      </li>
+      <li class="nav-list">
+        <a class="nav-link" href="./job_application.html">Job Application</a>
+      </li>
+      <li class="nav-list">
+        <a class="nav-link" href="./hiring.html">Hiring</a>
+
+    </li>
+    </ul>
+  </nav>
+</header>
+<body>
+    <main>
+        <section class="hiring-dashboard">
+            <div class="container">
+                <h1>Hiring Dashboard</h1>
+                <div id="hiringList">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function displayHiringPosts() {
+            const hiringPosts = JSON.parse(localStorage.getItem('hiringPosts')) || [];
+            const hiringList = document.getElementById('hiringList');
+            hiringList.innerHTML = '';
+            if (hiringPosts.length === 0) {
+                hiringList.innerHTML = '<p>No hiring posts found.</p>';
+                return;
+            }
+
+            hiringPosts.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.classList.add('post');
+                let postContent = `
+                    <div class="post-header">
+                        <h3 class="post-title">${post.title}</h3>
+                    </div>
+                    <div class="post-content">${post.content}</div>
+                `;
+
+                if (post.image) {
+                    postContent += `<img src="${post.image}" alt="${post.title}" class="post-image">`;
+                }
+
+                postContent += `
+                    <div class="post-meta"> 
+                        Posted by: ${post.author} on ${post.date}
+                    </div>
+                `;
+
+                postElement.innerHTML = postContent;
+                hiringList.appendChild(postElement);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', displayHiringPosts);
+    </script>
+</body>
+</html>
